@@ -12,7 +12,7 @@ import textVertex from '../../glsl/text/textVertex.glsl'
 // @ts-expect-error
 import textFragment from '../../glsl/text/textFragment.glsl'
 import { easing } from 'maath'
-import { useCarouselTexts } from "./constants"
+// import { useCarouselTexts } from "./constants"
 
 
 export const TextShaderMaterial = shaderMaterial(
@@ -85,8 +85,8 @@ export default function TitleText({ currentImage, isMobile }: TitleTextProps) {
 
 	const [imageIndex, setImageIndex] = useState(0)
 
-	const { imageTexts } = useCarouselTexts()
-	console.log(imageTexts)
+	// const { imageTexts } = useCarouselTexts()
+	// console.log(imageTexts)
 
 	const animationState = useRef<'idle' | 'first-chunk' | 'text-change' | 'second-chunk'>('idle')
 
