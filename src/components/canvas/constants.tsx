@@ -6,21 +6,21 @@ import type { IimageShaderMaterial } from './Experience'
 
 
 
-// const titlesList = [
-// 	{ imageNum: 0, title: 'FLOWING' },
-// 	{ imageNum: 1, title: 'NEWYORK' },
-// 	{ imageNum: 2, title: 'FURNITURE' },
-// 	{ imageNum: 3, title: 'CS AGENCY' },
-// 	{ imageNum: 4, title: 'ATELIER' },
-// 	{ imageNum: 5, title: 'ANCHOR' },
-// 	{ imageNum: 6, title: 'EXHITBITON' },
-// 	{ imageNum: 7, title: 'ART & TECH' },
-// 	{ imageNum: 8, title: 'ORCHARD' },
-// 	{ imageNum: 9, title: 'EXHITBITON' },
-// 	{ imageNum: 10, title: 'PEAK' },
-// 	{ imageNum: 11, title: 'SOUL' },
-// 	{ imageNum: 12, title: 'OTHER MONTHS' },
-// ]
+const titlesList = [
+	{ imageNum: 0, title: 'FLOWING' },
+	{ imageNum: 1, title: 'NEWYORK' },
+	{ imageNum: 2, title: 'FURNITURE' },
+	{ imageNum: 3, title: 'CS AGENCY' },
+	{ imageNum: 4, title: 'ATELIER' },
+	{ imageNum: 5, title: 'ANCHOR' },
+	{ imageNum: 6, title: 'EXHITBITON' },
+	{ imageNum: 7, title: 'ART & TECH' },
+	{ imageNum: 8, title: 'ORCHARD' },
+	{ imageNum: 9, title: 'EXHITBITON' },
+	{ imageNum: 10, title: 'PEAK' },
+	{ imageNum: 11, title: 'SOUL' },
+	{ imageNum: 12, title: 'OTHER MONTHS' },
+]
 
 export const carouselRadius = 26
 export const carouselCount = 12
@@ -112,31 +112,17 @@ export function useCarouselImages() {
 
 		  for (let i = 1; i <= carouselCount; i++) {
 			  const element = document.querySelector(`[data-flow-ribbon-img="${i}"]`)
-			  console.log('element',element)
 			  if (element) {
-				  let imageUrl = ''
+				let imageUrl = ''
+				const imgElement = element as HTMLImageElement
+				imageUrl = imgElement.dataset.src || imgElement.src
 
-				//   if (element.tagName === 'IMG') {
-					  const imgElement = element as HTMLImageElement
-					  imageUrl = imgElement.dataset.src || imgElement.src
-				//   } else {
-				// 	  const computedStyle = window.getComputedStyle(element)
-				// 	  const backgroundImage = computedStyle.backgroundImage
-				// 	  if (backgroundImage && backgroundImage !== 'none') {
-				// 		  const matches = backgroundImage.match(/url\(['"]?([^'")]+)['"]?\)/)
-				// 		  if (matches && matches[1]) {
-				// 			  imageUrl = matches[1]
-				// 		  }
-				// 	  }
-				//   }
-
-				//   if (imageUrl &&
-				// 	  !imageUrl.includes('placeholder') &&
-				// 	  !imageUrl.includes('data:image') &&
-				// 	  !imageUrl.endsWith('.avif') &&
-				// 	  imageUrl.startsWith('http')) {
-					  webflowImages.push(imageUrl)
-				//   }
+				if (imageUrl &&
+					!imageUrl.includes('placeholder') &&
+					!imageUrl.endsWith('.avif') &&
+					imageUrl.startsWith('http')) {
+					webflowImages.push(imageUrl)
+				}
 			  }
 		  }
 		  if(webflowImages.length > 0){
@@ -145,19 +131,7 @@ export function useCarouselImages() {
 			  return Array(carouselCount)
 				  .fill(undefined)
 				  .map((_, i) => `https://flowing-canvas.vercel.app/images/img${Math.floor(i % carouselCount) + 1}_.webp`)
-		  }
-		// If we found Webflow images, use them; otherwise fallback to default URLs
-		// if (webflowImages.length > 0) {
-		// 	console.log('Using Webflow images:', webflowImages)
-		// 	// Pad the array to carouselCount if needed
-		// 	while (webflowImages.length < carouselCount) {
-		// 		webflowImages.push(...webflowImages.slice(0, carouselCount - webflowImages.length))
-		// 	}
-		// 	return webflowImages.slice(0, carouselCount)
-		// }
-		// // Fallback to original logic
-
-		  
+		  }  
 	  }, [domReady])
 
 	const imageTextures = useTexture(imageUrls)
@@ -170,54 +144,54 @@ export function useCarouselImages() {
 }
 
 
-// export function useCarouselTexts() {
+export function useCarouselTexts() {
 
 
 
-// 	const [domReady, setDomReady] = useState(false)
+	const [domReady, setDomReady] = useState(false)
 
-// 	useEffect(() => {
-// 		// Wait for DOM to be fully loaded
-// 		if (document.readyState === 'complete') {
-// 			setDomReady(true)
-// 		} else {
-// 			const handleLoad = () => setDomReady(true)
-// 			window.addEventListener('load', handleLoad)
-// 			return () => window.removeEventListener('load', handleLoad)
-// 		}
-// 	}, [])
+	useEffect(() => {
+		// Wait for DOM to be fully loaded
+		if (document.readyState === 'complete') {
+			setDomReady(true)
+		} else {
+			const handleLoad = () => setDomReady(true)
+			window.addEventListener('load', handleLoad)
+			return () => window.removeEventListener('load', handleLoad)
+		}
+	}, [])
 
-// 	const imageTexts = useMemo(() => {
-// 		// console.log(domReady)
-// 		if (!domReady) {
-// 			// Return placeholder URLs while waiting for DOM
-// 			return titlesList
-// 		}
+	const imageTexts = useMemo(() => {
+		// console.log(domReady)
+		if (!domReady) {
+			// Return placeholder URLs while waiting for DOM
+			return titlesList
+		}
 
-// 	const webflowTexts: {imageNum: number, title: string}[] = [{ imageNum: 0, title: 'FLOWING' },]
+	const webflowTexts: {imageNum: number, title: string}[] = [{ imageNum: 0, title: 'FLOWING' },]
 
-// 		for (let i = 1; i <= carouselCount; i++) {
-// 			const element = document.querySelector(`[data-flow-ribbon-text="${i}"]`)
-// 			// console.log('element', element)
-// 			if (element) {
-// 				let imageTexts = ''
+		for (let i = 1; i <= carouselCount; i++) {
+			const element = document.querySelector(`[data-flow-ribbon-text-nr="${i}"]`)
+			// console.log('element', element)
+			if (element) {
+				let imageTexts = ''
 
-// 				const imgElement = element as HTMLImageElement
-// 				imageTexts = imgElement.dataset.src || imgElement.src
-// 				const item = {imageNum: i, title: imageTexts}
+				const imgElement = element as HTMLImageElement
+				imageTexts =  imgElement.textContent ? imgElement.textContent.trim() : imgElement.innerText
+				const item = {imageNum: i, title: imageTexts}
 
-// 				webflowTexts.push(item)
-// 			}
-// 		}
-// 		if (webflowTexts.length > 0) {
-// 			return webflowTexts
-// 		} else {
-// 			return  titlesList
-// 		}
-// 	}, [domReady])
+				webflowTexts.push(item)
+			}
+		}
+		if (webflowTexts.length > 0) {
+			return webflowTexts
+		} else {
+			return  titlesList
+		}
+	}, [domReady])
 
-// 	return { imageTexts }
-// }
+	return { imageTexts }
+}
 
 
 

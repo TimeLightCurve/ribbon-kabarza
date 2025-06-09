@@ -12,6 +12,7 @@ import textVertex from '../../glsl/text/textVertex.glsl'
 // @ts-expect-error
 import textFragment from '../../glsl/text/textFragment.glsl'
 import { easing } from 'maath'
+import { useCarouselTexts } from "./constants"
 
 
 export const TextShaderMaterial = shaderMaterial(
@@ -44,21 +45,21 @@ declare module '@react-three/fiber' {
 }
 
 
-const titlesList = [
-	{ imageNum: 0, title: 'FLOWING' },
-	{ imageNum: 1, title: 'NEWYORK' },
-	{ imageNum: 2, title: 'FURNITURE' },
-	{ imageNum: 3, title: 'CS AGENCY' },
-	{ imageNum: 4, title: 'ATELIER' },
-	{ imageNum: 5, title: 'ANCHOR' },
-	{ imageNum: 6, title: 'EXHITBITON' },
-	{ imageNum: 7, title: 'ART & TECH' },
-	{ imageNum: 8, title: 'ORCHARD' },
-	{ imageNum: 9, title: 'EXHITBITON' },
-	{ imageNum: 10, title: 'PEAK' },
-	{ imageNum: 11, title: 'SOUL' },
-	{ imageNum: 12, title: 'OTHER MONTHS' },
-]
+// const titlesList = [
+// 	{ imageNum: 0, title: 'FLOWING' },
+// 	{ imageNum: 1, title: 'NEWYORK' },
+// 	{ imageNum: 2, title: 'FURNITURE' },
+// 	{ imageNum: 3, title: 'CS AGENCY' },
+// 	{ imageNum: 4, title: 'ATELIER' },
+// 	{ imageNum: 5, title: 'ANCHOR' },
+// 	{ imageNum: 6, title: 'EXHITBITON' },
+// 	{ imageNum: 7, title: 'ART & TECH' },
+// 	{ imageNum: 8, title: 'ORCHARD' },
+// 	{ imageNum: 9, title: 'EXHITBITON' },
+// 	{ imageNum: 10, title: 'PEAK' },
+// 	{ imageNum: 11, title: 'SOUL' },
+// 	{ imageNum: 12, title: 'OTHER MONTHS' },
+// ]
 
 type TitleTextProps = {
 	timeRef: MutableRefObject<number>
@@ -84,12 +85,14 @@ export default function TitleText({ currentImage, isMobile }: TitleTextProps) {
 
 	const [imageIndex, setImageIndex] = useState(0)
 
+	const { imageTexts } = useCarouselTexts()
+	console.log(imageTexts)
 
 	const animationState = useRef<'idle' | 'first-chunk' | 'text-change' | 'second-chunk'>('idle')
 
 	useEffect(() => {
-
-		const imageText = titlesList.find((item) => item.imageNum === imageIndex)?.title
+		
+		const imageText = imageTexts.find((item) => item.imageNum === imageIndex)?.title
 		const imageTextMobile =
 			imageText ?
 				imageText.split(' ').length > 1 ? (
