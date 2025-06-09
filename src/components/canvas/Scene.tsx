@@ -1,6 +1,6 @@
 
 import projectState from './Ribbon r3f Project.theatre-project-state.json'
-import {  Preload, Stats, useProgress, useTexture } from '@react-three/drei'
+import { PerformanceMonitor, Preload, Stats, useProgress, useTexture } from '@react-three/drei'
 import { Canvas } from '@react-three/fiber'
 import { getProject, types } from '@theatre/core'
 import { SheetProvider } from '@theatre/r3f'
@@ -55,7 +55,7 @@ export default function Scene() {
 		const [animationStart, setAnimationStart] = useState(false)
 	const { total } = useProgress()
 	const [readyToStart, setReadyToStart] = useState(false)
-	// const [dpr, setDpr] = useState(2)
+	const [dpr, setDpr] = useState(2)
 
 		useEffect(() => {
 			if(!width) return
@@ -176,7 +176,7 @@ export default function Scene() {
 					gl.toneMapping = THREE.NoToneMapping
 					gl.getContext().getExtension('OES_texture_float')
 				}}
-				dpr={2}
+				dpr={dpr}
 				style={{
 					zIndex: 50,
 					position: 'fixed',
@@ -196,12 +196,35 @@ export default function Scene() {
 						{/* <Bvh> */}
 							<group visible={animationStart} dispose={null}>
 								{readyToStart && 
+									<>
 										<Experience
 											progressRef={progressRef}
 											timeRef={timeRef}
 											isMobile={isMobile}
 										/>
-
+										<PerformanceMonitor
+											bounds={(refreshrate) => {
+												// console.log(refreshrate)
+										return refreshrate > 90 ? [90, 120] : [50, 70]
+											}}
+											onIncline={() => {
+												setDpr(3)
+												// console.log('incline')
+											}} 
+											onDecline={() =>{ 
+												setDpr(1)
+												// console.log('declined')
+											}} 
+											flipflops={3} 
+											onFallback={(api) =>{ 
+												console.log('api',api)
+												if(dpr === 3 && api.fps < 60 ) setDpr(2)
+												if(dpr === 2 && api.fps < 60 ) setDpr(1)
+												console.log(dpr)
+												// console.log('fallback')
+											}} 
+										/>
+									</>
 								}
 								<PreloadAssets />
 							</group>
