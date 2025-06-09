@@ -71,12 +71,15 @@ export default function Scene() {
 
 	useEffect(() => {
 		console.log(total)
-		if (total > 13 && progress === 100) {
+		if (total > 13 	
+		) {
 			// const timer = setTimeout(() => {
 				setReadyToStart(true)
 			// }, 2000)
 
 			// return () => clearTimeout(timer)
+		} else {
+			setReadyToStart(false)
 		}
 	}, [total,progress])
 	
