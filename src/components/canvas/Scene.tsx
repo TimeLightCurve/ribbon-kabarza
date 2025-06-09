@@ -52,7 +52,7 @@ export default function Scene() {
 	// const GPUTier = useDetectGPU()
 		const {width} = useWindowSize()
 		const [isMobile, setIsMobile] = useState(true)
-		// const [animationStart, setAnimationStart] = useState(false)
+		const [animationStart, setAnimationStart] = useState(false)
 	const { total, progress } = useProgress()
 	const [readyToStart, setReadyToStart] = useState(false)
 	const [dpr, setDpr] = useState(2)
@@ -151,14 +151,14 @@ export default function Scene() {
 				console.log('Animation started')
 				ribbonSheet.sequence.position = 0
 				project.ready.then(() => {
-					// setAnimationStart(true)
+					setAnimationStart(true)
 					// ribbonSheet.sequence.position = 0
 					ribbonSheet.sequence
 						.play({
 							range: [0, 6 + 22 / 30],
 						})
 				})
-			}, 2500)
+			}, 2000)
 			
 			// Cleanup function to clear the timeout if component unmounts
 			return () => clearTimeout(animationTimer)
@@ -202,8 +202,7 @@ export default function Scene() {
 
 				<Suspense fallback={null}>
 					<SheetProvider sheet={ribbonSheet}>
-						{/* <Bvh> */}
-							<group dispose={null}>
+							<group visible={animationStart} dispose={null}>
 								{readyToStart && 
 									<>
 										<Experience
@@ -229,7 +228,7 @@ export default function Scene() {
 												console.log('api',api)
 												if(dpr === 3 && api.fps < 60 ) setDpr(2)
 												if(dpr === 2 && api.fps < 60 ) setDpr(1)
-												console.log(dpr)
+												// console.log(dpr)
 												// console.log('fallback')
 											}} 
 										/>
@@ -237,11 +236,6 @@ export default function Scene() {
 								}
 								<PreloadAssets />
 							</group>
-						{/* </Bvh> */}
-						{/* <RibbonText 
-								progressRef={progressRef}
-								timeRef={timeRef}
-							/> */}
 						<Preload all />
 					</SheetProvider>
 				</Suspense>
