@@ -70,19 +70,20 @@ export default function Scene() {
 
 
 	useEffect(() => {
-		setReadyToStart(false)
+		// setReadyToStart(false)
 		console.log('total', total)
 		console.log('progress', progress)
 		if (total > 13 && progress === 100) {
 			console.log('start')
-			const timer = setTimeout(() => {
+			// const timer = setTimeout(() => {
 				setReadyToStart(true)
-			}, 500)
+			// }, 500)
 
-			return () => clearTimeout(timer)
-		} else {
-			setReadyToStart(false)
-		}
+			// return () => clearTimeout(timer)
+		} 
+		// else {
+		// 	setReadyToStart(false)
+		// }
 	}, [total, progress])
 	
 
@@ -148,15 +149,16 @@ export default function Scene() {
 			// Delay the animation by 2.5 seconds
 			const animationTimer = setTimeout(() => {
 				console.log('Animation started')
+				ribbonSheet.sequence.position = 0
 				project.ready.then(() => {
 					// setAnimationStart(true)
-					ribbonSheet.sequence.position = 0
+					// ribbonSheet.sequence.position = 0
 					ribbonSheet.sequence
 						.play({
 							range: [0, 6 + 22 / 30],
 						})
 				})
-			}, 500)
+			}, 1000)
 			
 			// Cleanup function to clear the timeout if component unmounts
 			return () => clearTimeout(animationTimer)
