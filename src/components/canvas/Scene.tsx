@@ -158,7 +158,7 @@ export default function Scene() {
 							range: [0, 6 + 22 / 30],
 						})
 				})
-			}, 2000)
+			}, 2500)
 			
 			// Cleanup function to clear the timeout if component unmounts
 			return () => clearTimeout(animationTimer)
@@ -202,9 +202,8 @@ export default function Scene() {
 
 				<Suspense fallback={null}>
 					<SheetProvider sheet={ribbonSheet}>
-							<group visible={animationStart} dispose={null}>
 								{readyToStart && 
-									<>
+							<group visible={animationStart} dispose={null}>
 										<Experience
 											progressRef={progressRef}
 											timeRef={timeRef}
@@ -232,10 +231,10 @@ export default function Scene() {
 												// console.log('fallback')
 											}} 
 										/>
-									</>
+
+							</group>
 								}
 								<PreloadAssets />
-							</group>
 						<Preload all />
 					</SheetProvider>
 				</Suspense>
