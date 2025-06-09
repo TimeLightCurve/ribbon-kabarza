@@ -1,9 +1,26 @@
 import { useTexture } from '@react-three/drei'
-import { useMemo, useRef } from 'react'
+import {  useEffect, useMemo, useRef, useState } from 'react'
 import * as THREE from 'three'
 import { Vector3 } from 'three'
 import type { IimageShaderMaterial } from './Experience'
 
+
+
+// const titlesList = [
+// 	{ imageNum: 0, title: 'FLOWING' },
+// 	{ imageNum: 1, title: 'NEWYORK' },
+// 	{ imageNum: 2, title: 'FURNITURE' },
+// 	{ imageNum: 3, title: 'CS AGENCY' },
+// 	{ imageNum: 4, title: 'ATELIER' },
+// 	{ imageNum: 5, title: 'ANCHOR' },
+// 	{ imageNum: 6, title: 'EXHITBITON' },
+// 	{ imageNum: 7, title: 'ART & TECH' },
+// 	{ imageNum: 8, title: 'ORCHARD' },
+// 	{ imageNum: 9, title: 'EXHITBITON' },
+// 	{ imageNum: 10, title: 'PEAK' },
+// 	{ imageNum: 11, title: 'SOUL' },
+// 	{ imageNum: 12, title: 'OTHER MONTHS' },
+// ]
 
 export const carouselRadius = 26
 export const carouselCount = 12
@@ -69,18 +86,39 @@ export function useLinenTextures() {
 
 export function useCarouselImages() {
 
-	const imageUrls = useMemo(() => {
+	const [domReady, setDomReady] = useState(false)
+
+	useEffect(() => {
+		// Wait for DOM to be fully loaded
+		if (document.readyState === 'complete') {
+			setDomReady(true)
+		} else {
+			const handleLoad = () => setDomReady(true)
+			window.addEventListener('load', handleLoad)
+			return () => window.removeEventListener('load', handleLoad)
+		}
+	}, [])
+
+	  const imageUrls = useMemo(() => {
+		// console.log(domReady)
+		  if (!domReady) {
+			  // Return placeholder URLs while waiting for DOM
+			  return Array(carouselCount)
+				  .fill(undefined)
+				  .map((_, i) => `https://flowing-canvas.vercel.app/images/img${Math.floor(i % carouselCount) + 1}_.webp`)
+		  }
 
 		const webflowImages: string[] = []
 
-		for (let i = 1; i <= carouselCount; i++) {
-			const element = document.querySelector(`[data-flow-ribbon-img="${i}"]`)
-			if (element) {
-				let imageUrl = ''
+		  for (let i = 1; i <= carouselCount; i++) {
+			  const element = document.querySelector(`[data-flow-ribbon-img="${i}"]`)
+			  console.log('element',element)
+			  if (element) {
+				  let imageUrl = ''
 
 				//   if (element.tagName === 'IMG') {
-				const imgElement = element as HTMLImageElement
-				imageUrl = imgElement.dataset.src || imgElement.src
+					  const imgElement = element as HTMLImageElement
+					  imageUrl = imgElement.dataset.src || imgElement.src
 				//   } else {
 				// 	  const computedStyle = window.getComputedStyle(element)
 				// 	  const backgroundImage = computedStyle.backgroundImage
@@ -97,11 +135,17 @@ export function useCarouselImages() {
 				// 	  !imageUrl.includes('data:image') &&
 				// 	  !imageUrl.endsWith('.avif') &&
 				// 	  imageUrl.startsWith('http')) {
-				webflowImages.push(imageUrl)
+					  webflowImages.push(imageUrl)
 				//   }
-			}
-		}
-
+			  }
+		  }
+		  if(webflowImages.length > 0){
+			  return webflowImages
+		  } else {
+			  return Array(carouselCount)
+				  .fill(undefined)
+				  .map((_, i) => `https://flowing-canvas.vercel.app/images/img${Math.floor(i % carouselCount) + 1}_.webp`)
+		  }
 		// If we found Webflow images, use them; otherwise fallback to default URLs
 		// if (webflowImages.length > 0) {
 		// 	console.log('Using Webflow images:', webflowImages)
@@ -113,8 +157,8 @@ export function useCarouselImages() {
 		// }
 		// // Fallback to original logic
 
-		return webflowImages
-	}, [])
+		  
+	  }, [domReady])
 
 	const imageTextures = useTexture(imageUrls)
 	const imageShaderRefs = useRef<(IimageShaderMaterial | null)[]>([])
@@ -124,6 +168,58 @@ export function useCarouselImages() {
 
 	return { imageUrls, imageTextures, imageShaderRefs }
 }
+
+
+// export function useCarouselTexts() {
+
+
+
+// 	const [domReady, setDomReady] = useState(false)
+
+// 	useEffect(() => {
+// 		// Wait for DOM to be fully loaded
+// 		if (document.readyState === 'complete') {
+// 			setDomReady(true)
+// 		} else {
+// 			const handleLoad = () => setDomReady(true)
+// 			window.addEventListener('load', handleLoad)
+// 			return () => window.removeEventListener('load', handleLoad)
+// 		}
+// 	}, [])
+
+// 	const imageTexts = useMemo(() => {
+// 		// console.log(domReady)
+// 		if (!domReady) {
+// 			// Return placeholder URLs while waiting for DOM
+// 			return titlesList
+// 		}
+
+// 	const webflowTexts: {imageNum: number, title: string}[] = [{ imageNum: 0, title: 'FLOWING' },]
+
+// 		for (let i = 1; i <= carouselCount; i++) {
+// 			const element = document.querySelector(`[data-flow-ribbon-text="${i}"]`)
+// 			// console.log('element', element)
+// 			if (element) {
+// 				let imageTexts = ''
+
+// 				const imgElement = element as HTMLImageElement
+// 				imageTexts = imgElement.dataset.src || imgElement.src
+// 				const item = {imageNum: i, title: imageTexts}
+
+// 				webflowTexts.push(item)
+// 			}
+// 		}
+// 		if (webflowTexts.length > 0) {
+// 			return webflowTexts
+// 		} else {
+// 			return  titlesList
+// 		}
+// 	}, [domReady])
+
+// 	return { imageTexts }
+// }
+
+
 
 
 export function useMomentum() {
