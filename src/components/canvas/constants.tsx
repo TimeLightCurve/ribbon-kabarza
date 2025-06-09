@@ -86,27 +86,27 @@ export function useLinenTextures() {
 
 export function useCarouselImages() {
 
-	const [domReady, setDomReady] = useState(false)
+	// const [domReady, setDomReady] = useState(false)
 
-	useEffect(() => {
-		// Wait for DOM to be fully loaded
-		if (document.readyState === 'complete') {
-			setDomReady(true)
-		} else {
-			const handleLoad = () => setDomReady(true)
-			window.addEventListener('load', handleLoad)
-			return () => window.removeEventListener('load', handleLoad)
-		}
-	}, [])
+	// useEffect(() => {
+	// 	// Wait for DOM to be fully loaded
+	// 	if (document.readyState === 'complete') {
+	// 		setDomReady(true)
+	// 	} else {
+	// 		const handleLoad = () => setDomReady(true)
+	// 		window.addEventListener('load', handleLoad)
+	// 		return () => window.removeEventListener('load', handleLoad)
+	// 	}
+	// }, [])
 
 	  const imageUrls = useMemo(() => {
 		// console.log(domReady)
-		  if (!domReady) {
-			  // Return placeholder URLs while waiting for DOM
-			  return Array(carouselCount)
-				  .fill(undefined)
-				  .map((_, i) => `https://flowing-canvas.vercel.app/images/img${Math.floor(i % carouselCount) + 1}_.webp`)
-		  }
+		//   if (!domReady) {
+		// 	  // Return placeholder URLs while waiting for DOM
+		// 	  return Array(carouselCount)
+		// 		  .fill(undefined)
+		// 		  .map((_, i) => `https://flowing-canvas.vercel.app/images/img${Math.floor(i % carouselCount) + 1}_.webp`)
+		//   }
 
 		const webflowImages: string[] = []
 
@@ -125,14 +125,14 @@ export function useCarouselImages() {
 				}
 			  }
 		  }
-		  if(webflowImages.length > 0){
+		//   if(webflowImages.length > 0){
 			  return webflowImages
-		  } else {
-			  return Array(carouselCount)
-				  .fill(undefined)
-				  .map((_, i) => `https://flowing-canvas.vercel.app/images/img${Math.floor(i % carouselCount) + 1}_.webp`)
-		  }  
-	  }, [domReady])
+		//   } else {
+		// 	  return Array(carouselCount)
+		// 		  .fill(undefined)
+		// 		  .map((_, i) => `https://flowing-canvas.vercel.app/images/img${Math.floor(i % carouselCount) + 1}_.webp`)
+		//   }  
+	  }, [])
 
 	const imageTextures = useTexture(imageUrls)
 	const imageShaderRefs = useRef<(IimageShaderMaterial | null)[]>([])

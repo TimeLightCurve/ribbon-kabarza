@@ -143,7 +143,8 @@ export default function Scene() {
 		ribbonSheet.sequence.position = 0
 		if(readyToStart){
 			// Delay the animation by 2.5 seconds
-			const animationTimer = setTimeout(() => {
+			// const animationTimer = setTimeout(() => {
+				console.log('Animation started')
 				project.ready.then(() => {
 					setAnimationStart(true)
 					ribbonSheet.sequence.position = 0
@@ -152,10 +153,10 @@ export default function Scene() {
 							range: [0, 6 + 22 / 30],
 						})
 				})
-			}, 500)
+			// }, 1000)
 			
 			// Cleanup function to clear the timeout if component unmounts
-			return () => clearTimeout(animationTimer)
+			// return () => clearTimeout(animationTimer)
 		}
 	}, [readyToStart])
 
