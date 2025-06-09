@@ -158,7 +158,7 @@ export default function Scene() {
 							range: [0, 6 + 22 / 30],
 						})
 				})
-			}, 1800)
+			}, 2500)
 			
 			// Cleanup function to clear the timeout if component unmounts
 			return () => clearTimeout(animationTimer)
