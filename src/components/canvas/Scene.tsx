@@ -52,8 +52,8 @@ export default function Scene() {
 	// const GPUTier = useDetectGPU()
 		const {width} = useWindowSize()
 		const [isMobile, setIsMobile] = useState(true)
-		const [animationStart, setAnimationStart] = useState(false)
-	const { total, progress } = useProgress()
+		// const [animationStart, setAnimationStart] = useState(false)
+	const { total } = useProgress()
 	const [readyToStart, setReadyToStart] = useState(false)
 	const [dpr, setDpr] = useState(2)
 
@@ -73,6 +73,7 @@ export default function Scene() {
 		setReadyToStart(false)
 		if (total > 13 	
 		) {
+			console.log('start')
 			// const timer = setTimeout(() => {
 				setReadyToStart(true)
 			// }, 2000)
@@ -81,7 +82,7 @@ export default function Scene() {
 		} else {
 			setReadyToStart(false)
 		}
-	}, [total,progress])
+	}, [total])
 	
 
 	const isClient = useIsClient()
@@ -142,11 +143,12 @@ export default function Scene() {
 	useEffect(() => {
 		ribbonSheet.sequence.position = 0
 		if(readyToStart){
+			ribbonSheet.sequence.position = 0
 			// Delay the animation by 2.5 seconds
 			// const animationTimer = setTimeout(() => {
 				console.log('Animation started')
 				project.ready.then(() => {
-					setAnimationStart(true)
+					// setAnimationStart(true)
 					ribbonSheet.sequence.position = 0
 					ribbonSheet.sequence
 						.play({
@@ -198,7 +200,7 @@ export default function Scene() {
 				<Suspense fallback={null}>
 					<SheetProvider sheet={ribbonSheet}>
 						{/* <Bvh> */}
-							<group visible={animationStart} dispose={null}>
+							<group dispose={null}>
 								{readyToStart && 
 									<>
 										<Experience
