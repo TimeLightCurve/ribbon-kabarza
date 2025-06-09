@@ -5,6 +5,23 @@ import { Vector3 } from 'three'
 import type { IimageShaderMaterial } from './Experience'
 
 
+
+const titlesList = [
+	{ imageNum: 0, title: 'FLOWING' },
+	{ imageNum: 1, title: 'NEWYORK' },
+	{ imageNum: 2, title: 'FURNITURE' },
+	{ imageNum: 3, title: 'CS AGENCY' },
+	{ imageNum: 4, title: 'ATELIER' },
+	{ imageNum: 5, title: 'ANCHOR' },
+	{ imageNum: 6, title: 'EXHITBITON' },
+	{ imageNum: 7, title: 'ART & TECH' },
+	{ imageNum: 8, title: 'ORCHARD' },
+	{ imageNum: 9, title: 'EXHITBITON' },
+	{ imageNum: 10, title: 'PEAK' },
+	{ imageNum: 11, title: 'SOUL' },
+	{ imageNum: 12, title: 'OTHER MONTHS' },
+]
+
 export const carouselRadius = 26
 export const carouselCount = 12
 export const numPoints = 16 * 60
@@ -151,6 +168,58 @@ export function useCarouselImages() {
 
 	return { imageUrls, imageTextures, imageShaderRefs }
 }
+
+
+export function useCarouselTexts() {
+
+
+
+	const [domReady, setDomReady] = useState(false)
+
+	useEffect(() => {
+		// Wait for DOM to be fully loaded
+		if (document.readyState === 'complete') {
+			setDomReady(true)
+		} else {
+			const handleLoad = () => setDomReady(true)
+			window.addEventListener('load', handleLoad)
+			return () => window.removeEventListener('load', handleLoad)
+		}
+	}, [])
+
+	const imageTexts = useMemo(() => {
+		// console.log(domReady)
+		if (!domReady) {
+			// Return placeholder URLs while waiting for DOM
+			return titlesList
+		}
+
+	const webflowTexts: {imageNum: number, title: string}[] = [{ imageNum: 0, title: 'FLOWING' },]
+
+		for (let i = 1; i <= carouselCount; i++) {
+			const element = document.querySelector(`[data-flow-ribbon-text="${i}"]`)
+			// console.log('element', element)
+			if (element) {
+				let imageTexts = ''
+
+				const imgElement = element as HTMLImageElement
+				imageTexts = imgElement.dataset.src || imgElement.src
+				const item = {imageNum: i, title: imageTexts}
+
+				webflowTexts.push(item)
+			}
+		}
+		if (webflowTexts.length > 0) {
+			return webflowTexts
+		} else {
+			return  titlesList
+		}
+	}, [domReady])
+
+	return { imageTexts }
+}
+
+
 
 
 export function useMomentum() {
