@@ -125,8 +125,8 @@ export default function TitleText({ currentImage, isMobile }: TitleTextProps) {
 				// eslint-disable-next-line @typescript-eslint/ban-ts-comment
 				// @ts-expect-error
 				textRef.current.text = isMobile ? imageTextMobile : imageText
-				const fontSizeDesktop = imageText.length > 10 ? 32 : 40
-				const fontSizeMobile = currentImage.current === 0 ? 24 : imageText.length > 9 ? 18 : 20
+				const fontSizeDesktop = imageText.length > 12 ? 28 : imageText.length > 10 ? 32 : 40
+				const fontSizeMobile = currentImage.current === 0 ? 24 : imageText.length > 12 ? 14 : imageText.length > 9 ? 18 : 20
 				// eslint-disable-next-line @typescript-eslint/ban-ts-comment
 				// @ts-expect-error
 				textRef.current.fontSize = isMobile ? fontSizeMobile : fontSizeDesktop
