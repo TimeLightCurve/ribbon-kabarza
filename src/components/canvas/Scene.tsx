@@ -71,8 +71,9 @@ export default function Scene() {
 
 	useEffect(() => {
 		setReadyToStart(false)
+		console.log('total', total)
+		console.log('progress', progress)
 		if (total > 13 && progress === 100) {
-			console.log('total', total)
 			console.log('start')
 			// const timer = setTimeout(() => {
 				setReadyToStart(true)
@@ -82,7 +83,7 @@ export default function Scene() {
 		} else {
 			setReadyToStart(false)
 		}
-	}, [total])
+	}, [total, progress])
 	
 
 	const isClient = useIsClient()
