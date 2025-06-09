@@ -53,7 +53,7 @@ export default function Scene() {
 		const {width} = useWindowSize()
 		const [isMobile, setIsMobile] = useState(true)
 		// const [animationStart, setAnimationStart] = useState(false)
-	const { total } = useProgress()
+	const { total, progress } = useProgress()
 	const [readyToStart, setReadyToStart] = useState(false)
 	const [dpr, setDpr] = useState(2)
 
@@ -71,8 +71,8 @@ export default function Scene() {
 
 	useEffect(() => {
 		setReadyToStart(false)
-		if (total > 13 	
-		) {
+		if (total > 13 && progress > 100) {
+			console.log('total', total)
 			console.log('start')
 			// const timer = setTimeout(() => {
 				setReadyToStart(true)

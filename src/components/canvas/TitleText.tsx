@@ -86,7 +86,7 @@ export default function TitleText({ currentImage, isMobile }: TitleTextProps) {
 	const [imageIndex, setImageIndex] = useState(0)
 
 	const { imageTexts } = useCarouselTexts()
-	console.log(imageTexts)
+	// console.log(imageTexts)
 
 	const animationState = useRef<'idle' | 'first-chunk' | 'text-change' | 'second-chunk'>('idle')
 
