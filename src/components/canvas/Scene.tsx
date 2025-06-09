@@ -215,7 +215,7 @@ export default function Scene() {
 										return refreshrate > 90 ? [90, 120] : [50, 70]
 											}}
 											onIncline={() => {
-												setDpr(3)
+												setDpr(2)
 												// console.log('incline')
 											}} 
 											onDecline={() =>{ 
@@ -225,8 +225,7 @@ export default function Scene() {
 											flipflops={3} 
 											onFallback={(api) =>{ 
 												console.log('api',api)
-												if(dpr === 3 && api.fps < 60 ) setDpr(2)
-												if(dpr === 2 && api.fps < 60 ) setDpr(1)
+												if(dpr === 2 && api.fps < 55 ) setDpr(1)
 												// console.log(dpr)
 												// console.log('fallback')
 											}} 
