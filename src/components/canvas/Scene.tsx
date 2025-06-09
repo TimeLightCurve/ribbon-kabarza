@@ -75,11 +75,11 @@ export default function Scene() {
 		console.log('progress', progress)
 		if (total > 13 && progress === 100) {
 			console.log('start')
-			// const timer = setTimeout(() => {
+			const timer = setTimeout(() => {
 				setReadyToStart(true)
-			// }, 2000)
+			}, 500)
 
-			// return () => clearTimeout(timer)
+			return () => clearTimeout(timer)
 		} else {
 			setReadyToStart(false)
 		}
@@ -146,7 +146,7 @@ export default function Scene() {
 		if(readyToStart){
 			ribbonSheet.sequence.position = 0
 			// Delay the animation by 2.5 seconds
-			// const animationTimer = setTimeout(() => {
+			const animationTimer = setTimeout(() => {
 				console.log('Animation started')
 				project.ready.then(() => {
 					// setAnimationStart(true)
@@ -156,10 +156,10 @@ export default function Scene() {
 							range: [0, 6 + 22 / 30],
 						})
 				})
-			// }, 1000)
+			}, 500)
 			
 			// Cleanup function to clear the timeout if component unmounts
-			// return () => clearTimeout(animationTimer)
+			return () => clearTimeout(animationTimer)
 		}
 	}, [readyToStart])
 
