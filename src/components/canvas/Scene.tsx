@@ -53,7 +53,7 @@ export default function Scene() {
 		const {width} = useWindowSize()
 		const [isMobile, setIsMobile] = useState(true)
 		const [animationStart, setAnimationStart] = useState(false)
-	const { total } = useProgress()
+	const { total, progress } = useProgress()
 	const [readyToStart, setReadyToStart] = useState(false)
 	const [dpr, setDpr] = useState(2)
 
@@ -71,14 +71,14 @@ export default function Scene() {
 
 	useEffect(() => {
 		console.log(total)
-		if (total === 14) {
-			const timer = setTimeout(() => {
+		if (total > 13 && progress === 100) {
+			// const timer = setTimeout(() => {
 				setReadyToStart(true)
-			}, 2000)
+			// }, 2000)
 
-			return () => clearTimeout(timer)
+			// return () => clearTimeout(timer)
 		}
-	}, [total])
+	}, [total,progress])
 	
 
 	const isClient = useIsClient()
@@ -149,7 +149,7 @@ export default function Scene() {
 							range: [0, 6 + 22 / 30],
 						})
 				})
-			}, 2500)
+			}, 500)
 			
 			// Cleanup function to clear the timeout if component unmounts
 			return () => clearTimeout(animationTimer)
